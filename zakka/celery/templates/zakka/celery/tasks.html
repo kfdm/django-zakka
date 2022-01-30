@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Tasks</h2>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="task" value="{{ task }}" />
+            <input type="submit" value="{{ task }}" />
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
