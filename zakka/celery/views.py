@@ -3,6 +3,7 @@ from celery.execute import send_task
 
 from django import forms
 from django.contrib import messages
+from django.urls import path
 from django.views.generic import FormView
 
 from zakka import permissions
@@ -32,3 +33,6 @@ class CeleryJobs(permissions.SuperuserRequiredMixin, FormView):
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, "Invalid %s" % form.errors)
         return self.get(self.request)
+
+
+urlpatterns = [path("", CeleryJobs.as_view())]
