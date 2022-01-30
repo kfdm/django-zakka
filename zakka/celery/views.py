@@ -3,15 +3,16 @@ from celery.execute import send_task
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import FormView
+
+from zakka import permissions
 
 
 class TaskForm(forms.Form):
     task = forms.CharField(label="Your name", max_length=100)
 
 
-class CeleryJobs(UserPassesTestMixin, FormView):
+class CeleryJobs(permissions.SuperuserRequiredMixin, FormView):
     template_name = "zakka/celery/tasks.html"
     form_class = TaskForm
 
@@ -31,6 +32,3 @@ class CeleryJobs(UserPassesTestMixin, FormView):
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, "Invalid %s" % form.errors)
         return self.get(self.request)
-
-    def test_func(self):
-        return self.request.user.is_superuser
