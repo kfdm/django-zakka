@@ -69,4 +69,3 @@ def patch(url, data=None, **kwargs) -> requests.Response:
 @wraps(requests.delete, assigned=["__doc__"])
 def delete(url, **kwargs) -> requests.Response:
     return request("delete", url, **kwargs)
-
