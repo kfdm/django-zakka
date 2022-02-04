@@ -17,7 +17,10 @@ def user_agent(name):
     except PackageNotFoundError:
         v = "unknown"
 
-    domain = get_current_site(None).domain
+    try:
+        domain = get_current_site(None).domain
+    except:
+        domain = "unknown"
     ua = f"{name}/{v} (+{domain})"
     return ua
 
