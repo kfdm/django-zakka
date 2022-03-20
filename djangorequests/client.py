@@ -46,6 +46,11 @@ def get(url, **kwargs) -> requests.Response:
     return request("get", url, **kwargs)
 
 
+@wraps(requests.head, assigned=["__doc__"])
+def head(url, **kwargs) -> requests.Response:
+    return request("head", url, **kwargs)
+
+
 @wraps(requests.options, assigned=["__doc__"])
 def options(url, **kwargs) -> requests.Response:
     return request("options", url, **kwargs)
