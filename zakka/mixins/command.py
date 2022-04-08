@@ -1,7 +1,5 @@
 import logging
 
-logging.basicConfig(level=logging.WARNING)
-
 
 class LoggingMixin:
     def execute(self, *args, **options):
@@ -13,4 +11,10 @@ class LoggingMixin:
                 3: logging.DEBUG,
             }.get(options["verbosity"])
         )
+
+        ch = logging.StreamHandler()
+        formatter = logging.Formatter(logging.BASIC_FORMAT)
+        ch.setFormatter(formatter)
+
+        logging.root.addHandler(ch)
         return super().execute(*args, **options)
