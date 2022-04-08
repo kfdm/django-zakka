@@ -9,7 +9,7 @@ try:
 except ImportError:
     from importlib_metadata import version, PackageNotFoundError
 
-DEFAULT_DISTRIBUTION = getattr(settings, "UESR_AGENT_DISTRIBUTION", "django-requests")
+DEFAULT_DISTRIBUTION = getattr(settings, "UESR_AGENT_DISTRIBUTION", "django-zakka")
 
 
 def user_agent(name):
