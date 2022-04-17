@@ -14,6 +14,6 @@ def qs(context, *args, **kwargs):
     if args:
         kwargs[args[0]] = args[1]
     for key in kwargs:
-        if kwargs[key]:
+        if kwargs[key] is not None:
             qs[key] = kwargs[key]
     return urlencode(qs)
