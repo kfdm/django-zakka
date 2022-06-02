@@ -20,3 +20,7 @@ ${TWINE_BIN}: $(PIP_BIN)
 .PHONY: pip
 pip: $(PIP_BIN)
 	$(PIP_BIN) install --upgrade pip wheel twine
+
+.PHONY: changelog
+changelog:
+	git log --first-parent --pretty='%s'
