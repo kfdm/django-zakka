@@ -2,6 +2,7 @@ import json
 from urllib.parse import urlencode
 
 from django import template
+from django.shortcuts import reverse
 
 # The JSONEncoder from DRF handles quite a few types, so we default to that
 # if available and if not fallback to the Django one which still handles some
@@ -40,4 +41,11 @@ def prettyjson(value):
         indent=2,
         sort_keys=True,
         cls=JSONEncoder,
+    )
+
+
+@register.simple_tag(takes_context=True)
+def fullurl(context, viewname, *args, **kwargs):
+    return context["request"].build_absolute_uri(
+        reverse(viewname, args=args, kwargs=kwargs)
     )
