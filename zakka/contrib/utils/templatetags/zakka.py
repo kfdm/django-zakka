@@ -18,10 +18,22 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def qs(context, *args, **kwargs):
-    # If an item is passed as args, we
-    # convert it to a kwargs so we can
-    # simplify our code
+    """
+    Query string handler for paginators and filters
+
+    Assuming we have a query string like ?page=1&search=foo, there are
+    several cases in which we want to replace only the page key, while leaving
+    the rest alone. This tag allows us to replace individual values (like the
+    current page) while carrying over other values (like a search string)
+
+    Example:
+    <a href="?{% qs 'page' page_obj.next_page_number %}">
+    <a href="?{% qs foo=bar %}">
+    """
     qs = context["request"].GET.copy()
+    # We special case when args are passed, because the first arg may
+    # be the name of a key we want to replace. If an item is pased as
+    # args, we'll add it to our kwargs so the rest of our code is simple
     if args:
         kwargs[args[0]] = args[1]
     for key in kwargs:
