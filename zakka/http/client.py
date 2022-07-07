@@ -20,10 +20,10 @@ def user_agent(name):
 
     try:
         domain = get_current_site(None).domain
-    except:
-        domain = "unknown"
-    ua = f"{name}/{v} (+{domain})"
-    return ua
+    except Exception:
+        return f"{name}/{v}"
+    else:
+        f"{name}/{v} (+{domain})"
 
 
 class DjangoSession(requests.Session):
