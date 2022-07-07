@@ -1,6 +1,16 @@
+import json
 from urllib.parse import urlencode
 
 from django import template
+
+# The JSONEncoder from DRF handles quite a few types, so we default to that
+# if available and if not fallback to the Django one which still handles some
+# extra types
+try:
+    from rest_framework.utils.encoders import JSONEncoder
+except ImportError:
+    from django.core.serializers.json import DjangoJSONEncoder as JSONEncoder
+
 
 register = template.Library()
 
@@ -18,5 +28,16 @@ def qs(context, *args, **kwargs):
             qs.pop(key)
         else:
             qs[key] = kwargs[key]
-        
     return urlencode(qs)
+
+
+@register.filter(name="prettyjson")
+def prettyjson(value):
+    if isinstance(value, str):
+        value = json.loads(value)
+    return json.dumps(
+        value,
+        indent=2,
+        sort_keys=True,
+        cls=JSONEncoder,
+    )
