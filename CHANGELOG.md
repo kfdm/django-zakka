@@ -1,3 +1,7 @@
+# v0.5.1 - 2022/08/16
+
+- [BUGFIX] Fix missing `__init__.py` which prevents us from importing #4
+
 # v0.5.0 - 2022/07/07
 
 - [IMPROVEMENT] Additional templatetags (prettyjson, fullurl) and cleanup #3
