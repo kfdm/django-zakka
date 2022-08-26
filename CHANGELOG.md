@@ -1,3 +1,7 @@
+# v0.5.2 - 2022/08/16
+
+- [BUGFIX] Fix missing return from `user_agent` method
+
 # v0.5.1 - 2022/08/16
 
 - [BUGFIX] Fix missing `__init__.py` which prevents us from importing #4
