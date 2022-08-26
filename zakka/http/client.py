@@ -23,7 +23,7 @@ def user_agent(name):
     except Exception:
         return f"{name}/{v}"
     else:
-        f"{name}/{v} (+{domain})"
+        return f"{name}/{v} (+{domain})"
 
 
 class DjangoSession(requests.Session):
