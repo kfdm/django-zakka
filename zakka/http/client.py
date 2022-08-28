@@ -1,38 +1,14 @@
 import requests
 
-from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
 from functools import wraps
 
-try:
-    from importlib.metadata import version, PackageNotFoundError
-except ImportError:
-    from importlib_metadata import version, PackageNotFoundError
-
-DEFAULT_DISTRIBUTION = getattr(settings, "USER_AGENT_DISTRIBUTION", "django-zakka")
-
-
-def user_agent(name):
-    try:
-        v = version(distribution_name=name)
-    except PackageNotFoundError:
-        v = "unknown"
-
-    try:
-        domain = get_current_site(None).domain
-    except Exception:
-        return f"{name}/{v}"
-    else:
-        f"{name}/{v} (+{domain})"
+from zakka.conf import settings, user_agent
 
 
 class DjangoSession(requests.Session):
-    def __init__(self, distribution_name=DEFAULT_DISTRIBUTION):
+    def __init__(self, distribution_name=settings.USER_AGENT_DISTRIBUTION):
         super().__init__()
         self.headers["user-agent"] = user_agent(distribution_name)
-
-
-USER_AGENT = getattr(settings, "USER_AGENT", user_agent(DEFAULT_DISTRIBUTION))
 
 
 @wraps(requests.request, assigned=["__doc__"])

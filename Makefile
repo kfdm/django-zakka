@@ -20,6 +20,7 @@ ${TWINE_BIN}: $(PIP_BIN)
 .PHONY: pip
 pip: $(PIP_BIN)
 	$(PIP_BIN) install --upgrade pip wheel twine
+	$(PIP_BIN) install -e .
 
 .PHONY: changelog
 changelog:
