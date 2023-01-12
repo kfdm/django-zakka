@@ -1,3 +1,4 @@
+import difflib
 import json
 from urllib.parse import urlencode
 
@@ -32,7 +33,7 @@ def qs(context, *args, **kwargs):
     """
     qs = context["request"].GET.copy()
     # We special case when args are passed, because the first arg may
-    # be the name of a key we want to replace. If an item is pased as
+    # be the name of a key we want to replace. If an item is passed as
     # args, we'll add it to our kwargs so the rest of our code is simple
     if args:
         kwargs[args[0]] = args[1]
@@ -61,3 +62,17 @@ def fullurl(context, viewname, *args, **kwargs):
     return context["request"].build_absolute_uri(
         reverse(viewname, args=args, kwargs=kwargs)
     )
+
+
+@register.simple_tag
+def diff_json(a, b):
+    if isinstance(a, str):
+        a = json.loads(a)
+    if isinstance(b, str):
+        b = json.loads(b)
+    a = json.dumps(a, indent=4, sort_keys=True).splitlines(keepends=True)
+    b = json.dumps(b, indent=4, sort_keys=True).splitlines(keepends=True)
+    diff = difflib.unified_diff(a, b)
+    if diff:
+        return "".join(diff)
+    return "No Changes"
