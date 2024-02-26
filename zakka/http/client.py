@@ -5,9 +5,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from functools import wraps
 
 try:
-    from importlib.metadata import version, PackageNotFoundError
+    from importlib_metadata import PackageNotFoundError, version
 except ImportError:
-    from importlib_metadata import version, PackageNotFoundError
+    from importlib.metadata import PackageNotFoundError, version
 
 DEFAULT_DISTRIBUTION = getattr(settings, "USER_AGENT_DISTRIBUTION", "django-zakka")
 
