@@ -24,5 +24,14 @@ class Command(LoggingMixin, BaseCommand):
                     result = list(result)
                 pprint(result)
         else:
+            max_length = max([len(x) for x in current_app.tasks])
             for task in sorted(current_app.tasks):
-                print(task)
+                if task in current_app.conf.beat_schedule:
+                    print(
+                        task.ljust(max_length),
+                        self.style.MIGRATE_HEADING(
+                            current_app.conf.beat_schedule[task]["schedule"]
+                        ),
+                    )
+                else:
+                    print(task)
