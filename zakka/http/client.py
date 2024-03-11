@@ -1,6 +1,7 @@
-from functools import wraps
+from functools import lru_cache, wraps
 
 import requests
+from django.apps import apps
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 
@@ -12,18 +13,18 @@ except ImportError:
 DEFAULT_DISTRIBUTION = getattr(settings, "USER_AGENT_DISTRIBUTION", "django-zakka")
 
 
+@lru_cache
 def user_agent(name):
     try:
         v = version(distribution_name=name)
     except PackageNotFoundError:
         v = "unknown"
 
-    try:
+    if apps.is_installed("django.contrib.sites"):
         domain = get_current_site(None).domain
-    except Exception:
-        return f"{name}/{v}"
-    else:
         return f"{name}/{v} (+{domain})"
+    else:
+        return f"{name}/{v}"
 
 
 class DjangoSession(requests.Session):
