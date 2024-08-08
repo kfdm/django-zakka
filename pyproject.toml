@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "django-zakka"
 version = "0.5.2"
+requires-python = ">=3.9"
 license = { text = "MIT License" }
 authors = [{ name = "Paul Traylor" }]
 keywords = ["django"]
@@ -16,7 +17,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Internet :: WWW/HTTP",
@@ -27,6 +28,27 @@ dependencies = [
     "importlib-metadata>=1.0; python_version < \"3.8\"",
 ]
 
+[tool.distutils.bdist_wheel]
+universal = true
+
 [project.urls]
 Issues = "http://github.com/kfdm/django-zakka/issues"
 "Source Code" = "http://github.com/kfdm/django-zakka"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# https://beta.ruff.rs/docs/rules/
+select = [
+    "C",       # complexity
+    "E",       # pycodestyle
+    "F",       # Unused imports
+    "I",       # isort
+    "PGH004",  # Use specific rule codes when using noqa
+    "PLC0414", # Useless import alias. Import alias does not rename original package.
+    "S103",    # bad-file-permissions
+    "TRY004",  # Prefer TypeError exception for invalid type
+    "UP",      # pyupgrade
+    "W",       # pycodestyle
+]
