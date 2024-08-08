@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-zakka"
-version = "0.5.2"
+version = "0.6.0"
 requires-python = ">=3.9"
 license = { text = "MIT License" }
 authors = [{ name = "Paul Traylor" }]

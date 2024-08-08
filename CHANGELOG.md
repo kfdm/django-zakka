@@ -1,3 +1,9 @@
+# v0.6 - 2024/08/08
+
+- [IMPROVEMENT] Migrate to pyproject
+- [CHANGE] Update requirements to Python >=3.9
+- [INTERNAL] Linting with Ruff
+
 # v0.5.2 - 2022/08/16
 
 - [BUGFIX] Fix missing return from `user_agent` method
