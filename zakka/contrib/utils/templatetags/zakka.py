@@ -58,6 +58,4 @@ def prettyjson(value):
 
 @register.simple_tag(takes_context=True)
 def fullurl(context, viewname, *args, **kwargs):
-    return context["request"].build_absolute_uri(
-        reverse(viewname, args=args, kwargs=kwargs)
-    )
+    return context["request"].build_absolute_uri(reverse(viewname, args=args, kwargs=kwargs))

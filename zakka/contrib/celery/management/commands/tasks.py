@@ -1,7 +1,6 @@
 from pprint import pprint
 
 from celery import current_app
-
 from django.core.management.base import BaseCommand
 from django.test import override_settings
 

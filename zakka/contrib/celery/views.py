@@ -1,6 +1,5 @@
 from celery import current_app
 from celery.execute import send_task
-
 from django import forms
 from django.contrib import messages
 from django.urls import path
