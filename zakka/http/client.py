@@ -1,8 +1,8 @@
-import requests
+from functools import wraps
 
+import requests
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
-from functools import wraps
 
 try:
     from importlib_metadata import PackageNotFoundError, version
