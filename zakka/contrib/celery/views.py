@@ -23,14 +23,12 @@ class CeleryJobs(permissions.SuperuserRequiredMixin, FormView):
         return data
 
     def form_valid(self, form):
-        messages.add_message(
-            self.request, messages.INFO, "Running %s" % form.data["task"]
-        )
+        messages.add_message(self.request, messages.INFO, f"Running {form.data['task']}")
         send_task(form.data["task"])
         return self.get(self.request)
 
     def form_invalid(self, form):
-        messages.add_message(self.request, messages.ERROR, "Invalid %s" % form.errors)
+        messages.add_message(self.request, messages.ERROR, f"Invalid {form.errors}")
         return self.get(self.request)
 
 
