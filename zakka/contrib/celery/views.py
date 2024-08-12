@@ -19,7 +19,11 @@ class CeleryJobs(permissions.SuperuserRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         current_app.loader.import_default_modules()
-        data["tasks"] = current_app.tasks
+        # For each task in our current app, either get the version with schedule information or a
+        # placeholder with the same key
+        data["tasks"] = [
+            current_app.conf.beat_schedule.get(task, {"task": task}) for task in current_app.tasks
+        ]
         return data
 
     def form_valid(self, form):

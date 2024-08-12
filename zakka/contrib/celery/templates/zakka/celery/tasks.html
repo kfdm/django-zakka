@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Tasks</h2>
-<ul>
-    {% for task in tasks|dictsort:0 %}
-    <li>
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="task" value="{{ task }}" />
-            <input type="submit" value="{{ task }}" />
-        </form>
-    </li>
+<table class="table table-sm">
+    <tr>
+        <th>Task</th>
+        <th>Schedule</th>
+    </tr>
+    {% for task in tasks|dictsort:'task' %}
+    <tr>
+        <td>
+            <form action="" method="post">
+                {% csrf_token %}
+                <button name="task" value="{{ task.task }}">{{ task.task }}</button>
+            </form>
+        </td>
+        <td>{{task.schedule}}</td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
+
 {% endblock %}
