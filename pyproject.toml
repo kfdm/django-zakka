@@ -38,8 +38,8 @@ Issues = "http://github.com/kfdm/django-zakka/issues"
 [tool.ruff]
 line-length = 100
 
-[tool.ruff.lint]
-# https://beta.ruff.rs/docs/rules/
+[tool.ruff.lint] # https://beta.ruff.rs/docs/rules/
+
 select = [
     "C",       # complexity
     "E",       # pycodestyle
@@ -51,4 +51,8 @@ select = [
     "TRY004",  # Prefer TypeError exception for invalid type
     "UP",      # pyupgrade
     "W",       # pycodestyle
+]
+ignore = [
+    "E501", # Don't enforce line length for now
+    "E741", # Ambiguous variable name
 ]

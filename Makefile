@@ -33,12 +33,7 @@ changelog:
 ### Format Tasks
 ###############################################################################
 
-RUFF_BIN := $(VENV_DIR)/bin/ruff
-
-$(RUFF_BIN): $(PIP_BIN)
-	$(PIP_BIN) install ruff
-
 .PHONY: format
-format: $(RUFF_BIN) $(BLACK_BIN)
-	$(RUFF_BIN) check $(PKG_NAME) --fix
-	$(RUFF_BIN) format $(PKG_NAME)
+format:
+	uvx ruff check $(PKG_NAME) --fix
+	uvx ruff format $(PKG_NAME)
