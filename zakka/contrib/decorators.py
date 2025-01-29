@@ -1,5 +1,8 @@
+import hashlib
 import logging
 from functools import wraps
+
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
@@ -20,3 +23,30 @@ def skip_raw(func):
             return func(raw=raw, instance=instance, **kwargs)
 
     return _wrapper
+
+
+def cache_method(key=None, *, timeout=60):
+    def outer(f):
+        @wraps(f)
+        def wrapper(view, *args, **kwds):
+            prefix = key if key else f"{f.__module__}:{f.__qualname__}"
+
+            # We start with our user for our buffer string
+            buff = str(view.request.user)
+            # Then add in each kwds to make it unique
+            for k in kwds:
+                buff += f"{k}:{kwds[k]}"
+
+            hash = hashlib.sha1(buff.encode()).hexdigest()
+            cache_key = f"{prefix}||{hash}"
+
+            logger.debug("Using key %s for %s", cache_key, f)
+            return cache.get_or_set(
+                key=cache_key,
+                default=lambda: f(view, *args, **kwds),
+                timeout=timeout,
+            )
+
+        return wrapper
+
+    return outer
